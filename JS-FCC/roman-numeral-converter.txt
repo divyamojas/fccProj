@@ -1,0 +1,29 @@
+  let SYMB = {
+    "1"    : "I",
+    "5"    : "V",
+    "10"   : "X",
+    "50"   : "L",
+    "100"  : "C",
+    "500"  : "D",
+    "1000" : "M",
+  },
+  KEYS = Object.keys(SYMB);
+
+function convertToRoman(num) {
+  let places = num.toString().split("").map(el => parseInt(el));
+  return places.map((el, key) => conv(el,places.length -1 - key)).join("");
+}
+
+function conv (value, place){
+  return value <= 3 ? 
+          SYMB[KEYS[place * 2]].repeat(value):
+          value <= 5?
+            SYMB[KEYS[place * 2]].repeat(5 - value) + SYMB[KEYS[place * 2 + 1]]:
+            value <= 8?
+            SYMB[KEYS[place * 2 + 1]] + SYMB[KEYS[place * 2]].repeat(value - 5) :
+            SYMB[KEYS[place * 2]].repeat(10 -value) + SYMB[KEYS[place*2 + 2]];
+  
+  }
+
+convertToRoman(2)
+  

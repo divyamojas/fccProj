@@ -1,0 +1,12 @@
+function rot13(str) {
+  // let words = str.match(/([A-Z]+)/g);
+  // console.log(words.map(word => word.split("").map(lett => (lett.charCodeAt() - 13) >= 65? lett.charCodeAt() - 13:"" )))
+
+  console.log(
+   
+  )
+
+  return str.split("").map(el => (el.charCodeAt() >= 65 && el.charCodeAt() <= 90) ? el.charCodeAt() >= 78 ? String.fromCharCode(el.charCodeAt() - 13) : String.fromCharCode(el.charCodeAt() + 13) : el).join("");
+}
+
+rot13("SERR PBQR PNZ.C");

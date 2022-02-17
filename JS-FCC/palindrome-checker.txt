@@ -1,0 +1,11 @@
+function palindrome(str) {
+  let letters = str.toLowerCase().match(/[a-zA-Z0-9]/g) 
+  for(let i = 0, j = letters.length - 1;i < letters.length/2 ;i++, j--){
+    if(letters[i] != letters[j]){
+      return false;
+    }
+  }
+  return true;
+}
+
+palindrome("0_0 (: /-\ :) 0-0")

@@ -1,0 +1,13 @@
+function telephoneCheck(str) {
+  if (str.match(/(\d)/g).length > 11 || (str.match(/(\d)/g).length === 11 && str.charAt(0) != 1) || str.match(/(\d)/g).length < 10 || (/[^0-9)(-\s]/g).test(str) || str.match(/[\s-]/g)?.length > 3) return false;
+
+  if (str.match(/(\d)/g).length === 11) str = str.slice(1);
+  str = str.match(/[()\d]/g).join("");
+  return (/(^[(]\d\d\d[)]\d+$)|(^\d+$)/g).test(str)
+
+}
+
+telephoneCheck("5555555555")
+
+
+
