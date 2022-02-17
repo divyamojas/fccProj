@@ -1,0 +1,73 @@
+let CUR_AMOUNT = {
+  "PENNY": 0.01,
+  "NICKEL": 0.05,
+  "DIME": 0.1,
+  "QUARTER": 0.25,
+  "ONE": 1,
+  "FIVE": 5,
+  "TEN": 10,
+  "TWENTY": 20,
+  "ONE HUNDRED": 100,
+},
+  CUR_KEYS = Object.keys(CUR_AMOUNT),
+  CUR_VALS = Object.values(CUR_AMOUNT);
+
+function mod(a, b) {
+  let val = (a - parseInt(a / b) * b).toFixed(2);
+  return val;
+}
+
+function precise(el,) {
+  return parseFloat(parseFloat(el).toFixed(2)).toPrecision();
+}
+
+
+function checkCashRegister(price, cash, cid) {
+  let change = [], mon = cash - price, status = "OPEN";
+
+  for (let i = cid.length - 1; i >= 0; i--) {
+    if (mon >= CUR_VALS[i]) {
+      if (cid[i][1] >= mon) {
+        change.push([CUR_KEYS[i], parseFloat(precise(mon - precise(mod(mon, CUR_VALS[i]), i)))]);
+        mon = mod(mon, CUR_VALS[i]);
+      } else {
+        cid[i][1] ? change.push([CUR_KEYS[i], cid[i][1]]) : 1;
+        mon = (mon - cid[i][1]).toFixed(2);
+      }
+    }
+  }
+  if (mon > 0) {
+    status = "INSUFFICIENT_FUNDS";
+    change = [];
+  };
+  for (let el in change) {
+    if (change[el][0] === cid[el][0]) {
+      status = "CLOSED";
+      change = cid;
+      break;
+    }
+  }
+
+
+  return { "status": status, "change": change };
+}
+
+console.log(
+  checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])
+)
+
+console.log(
+  checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])
+)
+
+console.log(
+  checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
+)
+
+console.log(
+  checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
+)
+
+console.log(
+  checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
+)
